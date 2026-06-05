@@ -60,22 +60,16 @@ jobs:
           ssh -v vps 'echo SSH_OK' || echo "SSH FAILED"
 
       - name: Sync compose file
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
         run: |
-          ssh "$VPS_USER@$VPS_HOST" "mkdir -p ~/j0suetm.dev"
+          ssh vps "mkdir -p ~/j0suetm.dev"
           printf '%s' "${{ secrets.ENV_FILE }}" > .env
-          scp docker-compose.yml "$VPS_USER@$VPS_HOST:~/j0suetm.dev/docker-compose.yml"
-          scp .env "$VPS_USER@$VPS_HOST:~/j0suetm.dev/.env"
+          scp docker-compose.yml vps:~/j0suetm.dev/docker-compose.yml
+          scp .env vps:~/j0suetm.dev/.env
           rm -f .env
 
       - name: Pull and restart
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
         run: |
-          ssh "$VPS_USER@$VPS_HOST" 'bash -s' <<'EOF'
+          ssh vps 'bash -s' <<'EOF'
             set -e
             cd ~/j0suetm.dev
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
