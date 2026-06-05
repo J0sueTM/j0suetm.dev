@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}
+  IMAGE: ghcr.io/j0suetm/j0suetm.dev
 
 jobs:
   build-and-deploy:
