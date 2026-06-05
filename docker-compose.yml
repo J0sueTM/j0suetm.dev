@@ -1,0 +1,10 @@
+services:
+  app:
+    image: ghcr.io/j0suetm/j0suetm.dev:latest
+    container_name: j0suetm
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    pull_policy: always
