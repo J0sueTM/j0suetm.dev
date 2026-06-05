@@ -4,41 +4,18 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  IMAGE: ghcr.io/j0suetm/j0suetm.dev
-
 jobs:
   build-and-deploy:
     runs-on: self-hosted
     environment: deploy environment
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.IMAGE }}:latest
-            ${{ env.IMAGE }}:${{ github.sha }}
-
       - name: Deploy
         run: |
           printf '%s' "${{ secrets.ENV_FILE }}" > .env
-          docker compose pull
-          docker compose up -d
+          docker compose up -d --build
           rm -f .env
           docker image prune -f
