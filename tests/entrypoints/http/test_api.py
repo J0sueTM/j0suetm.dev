@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from starlette.testclient import TestClient
 
-from j0suetm.infra.server import app
+from j0suetm.infra.app import app
 
 
 def test_get_health() -> None:
