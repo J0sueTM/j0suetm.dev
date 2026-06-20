@@ -13,6 +13,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-dev --no-install-project
 
 COPY j0suetm/ ./j0suetm/
+COPY assets/ ./assets/
 
 ENV PATH="/app/.venv/bin:$PATH"
 
