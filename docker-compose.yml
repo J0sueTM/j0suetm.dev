@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    image: j0suetm.dev:latest
+    container_name: j0suetm
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "8000"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    depends_on:
+      - app

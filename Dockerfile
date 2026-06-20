@@ -16,8 +16,6 @@ COPY j0suetm/ ./j0suetm/
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-LABEL org.opencontainers.image.source="https://github.com/j0suetm/j0suetm.dev"
-
 EXPOSE 8000
 
 CMD ["uv", "run", "python", "-m", "j0suetm.entrypoints.cli", "serve"]
