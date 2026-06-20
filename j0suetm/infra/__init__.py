@@ -28,5 +28,9 @@ class Config:
     def scripts_dir(self) -> Path:
         return self.root_dir / "assets" / "scripts"
 
+    @property
+    def styles_dir(self) -> Path:
+        return self.root_dir / "assets" / "styles"
+
 
 global_cfg = Config()
